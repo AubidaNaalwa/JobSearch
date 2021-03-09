@@ -4,12 +4,11 @@ api = require('./server/routes/api'),
 mongoose = require('mongoose'),
 app = express(),
 PORT = process.env.REACT_APP_PORT || 8080,
-URI = process.env.REACT_APP_MONGODB_URI || 'mongodb://localhost/tPaisDB',
-API_PATH = require('./src/Constants').API_PATH;
+URI = process.env.REACT_APP_MONGODB_URI;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(API_PATH, api);
+app.use(api);
 
 app.use(express.static('build'));
 app.get('/*', function (req, res) {
