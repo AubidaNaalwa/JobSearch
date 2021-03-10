@@ -2,8 +2,8 @@ require('dotenv').config();
 const express = require('express'),
     api = require('./server/routes/api'),
     JobApi = require('./server/routes/Jobs'),
-    ContactApi = require('./server/routes/Contacts')
-mongoose = require('mongoose'),
+    ContactApi = require('./server/routes/Contacts'),
+    mongoose = require('mongoose'),
     app = express(),
     PORT = process.env.REACT_APP_PORT || 8080,
     URI = process.env.REACT_APP_MONGODB_URI;
