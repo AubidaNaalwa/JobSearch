@@ -15,10 +15,6 @@ app.use(api);
 app.use('/JobsApi', JobApi);
 app.use('/ContactApi', ContactApi);
 
-app.use(express.static('build'));
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
 
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true, connectTimeoutMS: 5000, serverSelectionTimeoutMS: 5000 })
     .then(function () {

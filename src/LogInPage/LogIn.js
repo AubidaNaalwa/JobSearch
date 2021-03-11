@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,6 +7,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { observer, inject } from 'mobx-react'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -29,9 +30,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+function SignIn(props) {
   const classes = useStyles();
+  const [username, setUserName] = useState("")
+  const [password, setPassword] = useState("")
 
+  const onSubmit = async () => {
+    await props.userStore.SignIn(username, password)
+    window.location.reload()
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -42,10 +49,11 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <div className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
+            value={username}
             required
             fullWidth
             id="email"
@@ -53,9 +61,11 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={(e) => setUserName(e.target.value)}
           />
           <TextField
             variant="outlined"
+            value={password}
             margin="normal"
             required
             fullWidth
@@ -64,19 +74,24 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={(e) => setPassword(e.target.value)}
           />
-       
+
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={onSubmit}
           >
+
             Sign In
+
           </Button>
-        </form>
+        </div>
       </div>
     </Container>
   );
 }
+
+export default inject('userStore')(observer(SignIn));
